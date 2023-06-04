@@ -11,10 +11,13 @@
         background: #333;
         font-family: 'Inter' !important;
         color: white;
+        overflow-x: hidden;
       }
       .gear {
-        width: 100px;
-        height: 100px;
+        width: 10vw;
+        max-width: 100px;
+        height: 10vw;
+        max-height: 100px;
         border-radius: 50px;
         transition: transform 0.2s;
         float: left;
@@ -28,7 +31,7 @@
       }
 
       #gen, #best {
-        min-height: 100px;
+        display: flex;
       }
 
       .center {

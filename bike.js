@@ -5,10 +5,10 @@
 const globals = {
   gear_start: 1,
   gear_end: 1,
-  mutation_chance: 0.3,
-  min_survival: 200,
-  percent_survival: 0.20,
-  initial_size: 10000,
+  mutation_chance: 0.5,
+  min_survival: 20,
+  percent_survival: 0.50,
+  initial_size: 100,
   min_children: 2,
   max_children: 4,
   target: Math.PI,
@@ -51,7 +51,7 @@ const fitness = (org) => {
 const crossover = (a, b) => {
   const out = [];
   for (let i = 0; i < gears.length; i++) {
-    if (flip_coin(globals.mutation_chance)) {
+    if (flip_coin(globals.mutation_chance) || (!a[i] && !b[i])) {
       out.push(choose(gears[i]));
     } else {
       out.push(choose([a[i], b[i]]));

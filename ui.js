@@ -30,12 +30,12 @@ const gears_helper = () => {
     const el = document.createElement('input');
     el.addEventListener('keyup', () => {
       gears[i] = el.value.split(',').map((x) => {
-        const val = parseFloat(x);
+        const val = parseFloat(x.trim());
         if (isNaN(val) || !isFinite(val) || val === 0.0) return 1.0;
         return val;
       });
     });
-    el.value = gears[i].join(',');
+    el.value = gears[i].join(', ');
     el_gears_container.appendChild(el);
     el_gears_container.appendChild(document.createElement('br'));
   }
@@ -51,7 +51,7 @@ const ui_init = () => {
   el_add_gear.addEventListener('click', () => {
     const arr = [];
     for (let i = 0; i < gears[0].length; i++) {
-      arr.push(Math.floor(Math.random() * 10));
+      arr.push(Math.floor(Math.random() * 30) + 1);
     }
     gears.push(arr);
     gears_helper();
