@@ -6,4 +6,4 @@ A simple genetic algorithm for compound gearing ratios.
 
 ## Screenshot
 
-![demo.png](https://github.com/Cubified/bike/blob/main/demopng)
+![demo.png](https://github.com/Cubified/bike/blob/main/demo.png)
