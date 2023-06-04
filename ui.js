@@ -17,6 +17,10 @@ const el_gears_container = document.getElementById('gears_container');
 const el_add_gear = document.getElementById('add_gear');
 const el_del_gear = document.getElementById('del_gear');
 const el_target_ratio = document.getElementById('target_ratio');
+const el_mutation_chance = document.getElementById('mutation_chance');
+const el_allow_skips = document.getElementById('allow_skips');
+const el_fitness_func = document.getElementById('fitness_func');
+const el_reset = document.getElementById('reset');
 
 let min_gear = 1;
 let max_gear = 1;
@@ -49,21 +53,35 @@ const ui_init = () => {
     globals.target = parseFloat(el_target_ratio.value);
   });
   el_add_gear.addEventListener('click', () => {
-    const arr = [];
-    for (let i = 0; i < gears[0].length; i++) {
-      arr.push(Math.floor(Math.random() * 30) + 1);
-    }
-    gears.push(arr);
+    gears.push(n_rands(gears[0]?.length ?? 7));
     gears_helper();
   });
   el_del_gear.addEventListener('click', () => {
     gears.splice(gears.length - 1, 1);
     gears_helper();
   });
+
+  el_mutation_chance.addEventListener('keyup', () => {
+    globals.mutation_chance = parseFloat(el_mutation_chance.value);
+    if (isNaN(globals.mutation_chance)) globals.mutation_chance = 0.0;
+  });
+  el_mutation_chance.value = globals.mutation_chance;
+
+  el_allow_skips.addEventListener('change', () => {
+    globals.allow_skips = el_allow_skips.checked;
+  });
+
+  el_fitness_func.addEventListener('change', () => {
+    globals.fitness_func = parseInt(el_fitness_func.value);
+  });
+
+  el_reset.addEventListener('click', () => {
+    reset = true;
+  });
 };
 
 const scale_helper = (x) =>
-  (0.8 * x) + 0.2;
+  x === SKIP ? 0 : (0.8 * x) + 0.2;
 
 let n = 1;
 const ui_draw_gen = (next_gen) => {
@@ -73,7 +91,7 @@ const ui_draw_gen = (next_gen) => {
 
   el_n.innerText = n++;
 
-  el_gen_gears.innerText = 'Gears: [' + next_gen[0].toString() + ']';
+  el_gen_gears.innerText = 'Gears: [' + next_gen[0].filter((x) => (x !== -1)).toString() + ']';
   el_gen_ratio.innerText = 'Ratio: ' + ratio(next_gen[0]).toFixed(5);
 
   /*
@@ -87,6 +105,8 @@ const ui_draw_gen = (next_gen) => {
 };
 
 const ui_draw_best = (best, changed) => {
+  if (!best) return;
+
   if (changed) {
     el_best.innerHTML = '<div class="gear"></div>'.repeat(best.length);
     el_best_gen.innerText = 'Generation: ' + n;
@@ -96,7 +116,7 @@ const ui_draw_best = (best, changed) => {
     el_best.children[i].style.transform = `scale(${scale_helper((best[i] - min_gear) / max_gear)})`;
   }
 
-  el_best_gears.innerText = 'Gears: [' + best.toString() + ']';
+  el_best_gears.innerText = 'Gears: [' + best.filter((x) => (x !== -1)).toString() + ']';
   el_best_ratio.innerText = 'Ratio: ' + ratio(best).toFixed(5);
     /*
   console.log('Best overall:', best);

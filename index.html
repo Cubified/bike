@@ -52,6 +52,9 @@
       
       #add_gear, #del_gear {
         width: 2rem;
+      }
+
+      button {
         cursor: pointer;
       }
     </style>
@@ -86,11 +89,34 @@
         <br>
         <label>Target ratio:</label>
         <select id='target_ratio'>
-          <option value='3.14159'>3.14159</option>
-          <option value='2.71828'>2.71828</option>
+          <option value='3.141592653589793'>3.14159</option>
+          <option value='2.718281828459045'>2.71828</option>
           <option value='1.00000'>1.00000</option>
         </select>
         <p class='nums' id='target_ratio'></p>
+        <label>Mutation chance:</label>
+        <br>
+        <br>
+        <input id='mutation_chance'>
+        <br>
+        <br>
+        <label>Allow skipping gears:</label>
+        <input type='checkbox' id='allow_skips' checked>
+        <br>
+        <br>
+        <label>Fitness function:</label>
+        <br>
+        <br>
+        <select id='fitness_func'>
+          <option value='0'>Simple difference</option>
+          <option value='1' selected>Inverse exponential</option>
+          <option value='2'>Gaussian</option>
+        </select>
+        <br>
+        <br>
+        <button id='reset'>Reset Gene Pool</button>
+        <br>
+        <br>
       </span>
     </div>
     <script src='ui.js'></script>
